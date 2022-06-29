@@ -4,22 +4,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.aplicada2.apiretrofit.model.Exchange
+import com.aplicada2.apiretrofit.model.Coin
 import androidx.compose.runtime.*
 import androidx.lifecycle.viewModelScope
 import com.aplicada2.apiretrofit.network.ApiService
 import kotlinx.coroutines.launch
 
-class ExchangeViewModel: ViewModel() {
+class CoinViewModel: ViewModel() {
 
-    var exchangeListResponse:List<Exchange> by mutableStateOf(listOf())
+    var coinListResponse:List<Coin> by mutableStateOf(listOf())
     var errorMessage: String by mutableStateOf("")
-    fun getExchangeList() {
+    fun getCoinList() {
         viewModelScope.launch {
             val apiService = ApiService.getInstance()
             try {
-                val exchangeList = apiService.getExchanges()
-                exchangeListResponse = exchangeList
+                val coinList = apiService.getCoins()
+                coinListResponse = coinList
             }
             catch (e: Exception) {
                 errorMessage = e.message.toString()

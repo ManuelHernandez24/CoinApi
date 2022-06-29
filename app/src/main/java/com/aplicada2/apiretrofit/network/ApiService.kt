@@ -1,14 +1,14 @@
 package com.aplicada2.apiretrofit.network
 
-import com.aplicada2.apiretrofit.model.Exchange
+import com.aplicada2.apiretrofit.model.Coin
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
 
 interface ApiService {
-    @GET("exchanges")
-    suspend fun getExchanges(): List <Exchange>
+    @GET(".json")
+    suspend fun getCoins(): List <Coin>
 
     companion object {
 
@@ -17,7 +17,7 @@ interface ApiService {
 
             if (apiService == null) {
                 apiService = Retrofit.Builder()
-                    .baseUrl("https://api.coinpaprika.com/v1/")
+                    .baseUrl("https://coins-edb8e-default-rtdb.firebaseio.com/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(ApiService::class.java)
             }

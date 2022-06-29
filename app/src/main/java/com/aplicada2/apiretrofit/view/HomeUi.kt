@@ -1,5 +1,6 @@
 package com.aplicada2.apiretrofit.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,52 +12,62 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.aplicada2.apiretrofit.model.Exchange
+import com.aplicada2.apiretrofit.model.Coin
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
+import coil.compose.base.R
+import coil.compose.rememberImagePainter
+import coil.size.Scale
+import coil.transform.CircleCropTransformation
 
 @Composable
-fun ExchangeItem(exchange: Exchange){
-    Card(modifier = Modifier.padding(8.dp,4.dp).fillMaxWidth().height(110.dp),shape = RoundedCornerShape(8.dp), elevation = 4.dp){
+fun CoinItem(coin: Coin){
+    Card(modifier = Modifier.padding(0.dp,4.dp).fillMaxWidth().height(80.dp),shape = RoundedCornerShape(3.dp), elevation = 4.dp){
         Surface(){
-            Row(Modifier.padding(4.dp).fillMaxSize()) {Column(
+            Row(Modifier.padding(2.dp).fillMaxSize()) {Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .padding(4.dp)
+                    .padding(2.dp)
                     .fillMaxHeight()
                     .weight(0.8f)
             ) {
-                Text(
-                    text = exchange.name,
-                    style = MaterialTheme.typography.subtitle1,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = exchange.last_updated,
-                    style = MaterialTheme.typography.caption,
-                    modifier = Modifier
-                        .background(
-                            Color.LightGray
-                        )
-                        .padding(4.dp)
-                )
-                Text(
-                    text = exchange.description,
-                    style = MaterialTheme.typography.body1,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-                val estado: String
-                if(exchange.active){
-                    estado = "Activo"
-                }else{
-                    estado = "Inactivo"
-                }
-                Text(
-                    text = estado,
-                    style = MaterialTheme.typography.body1,
-                    overflow = TextOverflow.Ellipsis
-                )
+Row{
+    Image(
+        painter = rememberImagePainter(
+            data = coin.ImageUrl,
+
+            builder = {
+                scale(Scale.FILL)
+                placeholder(coil.compose.base.R.drawable.notification_action_background)
+                transformations(CircleCropTransformation())
+
+            }
+        ),
+        contentDescription = coin.Descripcion,
+        modifier = Modifier
+            .fillMaxHeight()
+            .weight(0.4f)
+    )
+
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .padding(4.dp)
+            .fillMaxHeight()
+            .weight(0.8f)
+    ) {
+        Text(
+            text = coin.Descripcion,
+            style = MaterialTheme.typography.subtitle1,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text ="${coin.Valor}USD$",
+            style = MaterialTheme.typography.subtitle1
+        )
+    }
+}
 
             }
             }

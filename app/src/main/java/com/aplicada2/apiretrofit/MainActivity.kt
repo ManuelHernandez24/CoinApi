@@ -10,18 +10,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.aplicada2.apiretrofit.model.Exchange
+import com.aplicada2.apiretrofit.model.Coin
 import com.aplicada2.apiretrofit.ui.theme.ApiRetrofitTheme
-import com.aplicada2.apiretrofit.view.ExchangeItem
-import com.aplicada2.apiretrofit.viewModel.ExchangeViewModel
+import com.aplicada2.apiretrofit.view.CoinItem
+import com.aplicada2.apiretrofit.viewModel.CoinViewModel
 
 class MainActivity : ComponentActivity() {
 
-    val exchangeViewModel by viewModels<ExchangeViewModel>()
+    val coinViewModel by viewModels<CoinViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -31,8 +30,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ExchangeList(exchangeList = exchangeViewModel.exchangeListResponse)
-                    exchangeViewModel.getExchangeList()
+                    CoinList(coinList = coinViewModel.coinListResponse)
+                    coinViewModel.getCoinList()
 
                 }
             }
@@ -41,10 +40,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ExchangeList(exchangeList: List<Exchange>){
+fun CoinList(coinList: List<Coin>){
     LazyColumn{
-        itemsIndexed(items = exchangeList){index, item ->
-            ExchangeItem(exchange = item)
+        itemsIndexed(items = coinList){index, item ->
+            CoinItem(coin = item)
         }
     }
 }
@@ -54,7 +53,7 @@ fun ExchangeList(exchangeList: List<Exchange>){
 @Composable
 fun DefaultPreview() {
     ApiRetrofitTheme {
-        val exchange = Exchange("Victor Manuel","Ejemplo de descripcion.", true, "24/07/2002")
-        ExchangeItem(exchange = exchange)
+        val coin = Coin(1,"Bitcoin", 2000.00, "https://bitcoin.org/img/icons/opengraph.png?1656252469")
+        CoinItem(coin = coin)
     }
 }
